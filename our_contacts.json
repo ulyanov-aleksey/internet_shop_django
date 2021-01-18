@@ -1,0 +1,25 @@
+[
+  {
+    "city": "Воронеж",
+    "phone": "+80000000",
+    "email": "voroneg.ru",
+    "eddress": "VVVVVVVV",
+    "note": "связь по доп номеру"
+
+  },
+  {
+    "city": "Москва",
+    "phone": "+81111111",
+    "email": "moscow.ru",
+    "eddress": "MMMMMMMM",
+    "note": "связь по доп номеру"
+
+  },
+  {
+    "city": "Санкт-Петербург",
+    "phone": "+822222222",
+    "email": "voroneg.ru",
+    "eddress": "SPSP",
+    "note": "связь по доп номеру"
+  }
+]
