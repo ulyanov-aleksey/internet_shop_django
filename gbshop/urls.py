@@ -19,20 +19,20 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from mainapp import views as mainviews
 
-# urlpatterns = [
-#     path('', mainviews.main, name='main'),
-#     path('contacts/', mainviews.contactes, name='cont'),
-#     path('products/', include('mainapp.urls', namespace='all_products')),
-#     path('auth/', include('authapp.urls', namespace='auth')),
-#     path('basket/', include('basketapp.urls', namespace='basket')),
-#
-#     path('', include('social_django.urls', namespace='social')),
-#
-#     path('admin/', include('adminapp.urls', namespace='admin')),
-#     path('order/', include('ordersapp.urls', namespace='order')),
-#
-#     # path('admin/', admin.site.urls),
-# ]
+urlpatterns = [
+    path('', mainviews.main, name='main'),
+    path('contacts/', mainviews.contactes, name='cont'),
+    path('products/', include('mainapp.urls', namespace='all_products')),
+    path('auth/', include('authapp.urls', namespace='auth')),
+    path('basket/', include('basketapp.urls', namespace='basket')),
+
+    path('', include('social_django.urls', namespace='social')),
+
+    path('admin/', include('adminapp.urls', namespace='admin')),
+    path('order/', include('ordersapp.urls', namespace='order')),
+
+    # path('admin/', admin.site.urls),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
