@@ -143,8 +143,8 @@ def products(request, pk=None, page=1):
             category = {'name': 'все', 'pk': 0}
         else:
             category = get_category(pk)
-            # products_list = get_products_in_category_orederd_by_price(pk)
-            products_list = Products.objects.filter(Q(category_pk=1) | Q(category_pk=2))   # использование Q-обьектов
+            products_list = get_products_in_category_orederd_by_price(pk)
+            # products_list = Products.objects.filter(Q(category_pk=1) | Q(category_pk=2))   # вариант использование Q-обьектов
 
         paginator = Paginator(products_list, 2)
         # обработка исключений
