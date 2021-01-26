@@ -29,25 +29,25 @@ def add(request, pk):
         return HttpResponseRedirect(reverse('all_products:product', args=[pk]))
     product = get_object_or_404(Products, pk=pk)
 
-    # basket_item = Basket.objects.filter(user=request.user, product=product).first()
-    basket_item = Basket.get_product(user=request.user, product=product)
-    #
-    # if not basket_item:
-    #     basket_item = Basket(user=request.user, product=product)
-    #
-    # basket_item.quantity += 1
-    # basket_item.save()
+    basket_item = Basket.objects.filter(user=request.user, product=product).first()
+    # basket_item = Basket.get_product(user=request.user, product=product)
 
-    if basket_item:
-        basket_item[0].quantity = F('quantity') + 1
-        basket_item[0].save()
-        update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
-        print(f'query basket_add:{update_queries}')
-
-    else:
+    if not basket_item:
         basket_item = Basket(user=request.user, product=product)
-        basket_item.quantity += 1
-        basket_item.save()
+
+    basket_item.quantity += 1
+    basket_item.save()
+
+    # if basket_item:
+    #     basket_item[0].quantity = F('quantity') + 1
+    #     basket_item[0].save()
+    #     update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
+    #     print(f'query basket_add:{update_queries}')
+    #
+    # else:
+    #     basket_item = Basket(user=request.user, product=product)
+    #     basket_item.quantity += 1
+    #     basket_item.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
