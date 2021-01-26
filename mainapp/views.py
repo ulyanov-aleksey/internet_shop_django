@@ -4,6 +4,7 @@ import random
 
 from django.conf import settings
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.core.cache import cache
 
@@ -142,7 +143,8 @@ def products(request, pk=None, page=1):
             category = {'name': 'все', 'pk': 0}
         else:
             category = get_category(pk)
-            products_list = get_products_in_category_orederd_by_price(pk)
+            # products_list = get_products_in_category_orederd_by_price(pk)
+            products_list = Products.objects.filter(Q(category_pk=1) | Q(category_pk=2))   # использование Q-обьектов
 
         paginator = Paginator(products_list, 2)
         # обработка исключений
