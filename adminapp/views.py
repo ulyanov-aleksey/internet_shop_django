@@ -254,28 +254,28 @@ class ProductCategoryUpdateView(UpdateView):
         context['title'] = 'категория/редактирование'
         return context
 
-    # def form_valid(self, form):
-    #     if 'discount' in form.cleaned_data:
-    #         discount = form.cleaned_data['discount']
-    #         if discount:
-    #             self.object.product_set.update(price=F('price') * (1 - discount / 100))
-    #             # db_profile_by_type(self.__class__, 'UPDATE', connection.queries)
-    #
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.products_set.update(price=F('price') * (1 - discount / 100))
+                db_profile_by_type(self.__class__, 'UPDATE', connection.queries)
+
+        return super().form_valid(form)
 
 
-# Сигнал для установки is_active для Продукта категории в зависимости от значения в Категории
 def db_profile_by_type(prefix, type, queries):
     update_queries = list(filter(lambda x: type in x['sql'], queries))
     print(f'db_profile {type} for {prefix}:')
     [print(query['sql']) for query in update_queries]
 
 
+# Сигнал для установки is_active для Продукта категории в зависимости от значения в Категории
 @receiver(pre_save, sender=ProductsCategores)
 def product_is_active_update_productcategory_save(sender, instance, **kwargs):
     if instance.pk:
         if instance.is_active:
-            instance.products_set.update(is_active=True)
+            instance.products_set.update(is_active=True)  # products_set - для  Products
         else:
             instance.products_set.update(is_active=False)
 
