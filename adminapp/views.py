@@ -265,21 +265,21 @@ class ProductCategoryUpdateView(UpdateView):
 
 
 # Сигнал для установки is_active для Продукта категории в зависимости от значения в Категории
-# def db_profile_by_type(prefix, type, queries):
-#     update_queries = list(filter(lambda x: type in x['sql'], queries))
-#     print(f'db_profile {type} for {prefix}:')
-#     [print(query['sql']) for query in update_queries]
-#
-#
-# @receiver(pre_save, sender=ProductsCategores)
-# def product_is_active_update_productcategory_save(sender, instance, **kwargs):
-#     if instance.pk:
-#         if instance.is_active:
-#             instance.product_set.update(is_active=True)
-#         else:
-#             instance.product_set.update(is_active=False)
-#
-#         db_profile_by_type(sender, 'UPDATE', connection.queries)
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductsCategores)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.products_set.update(is_active=True)
+        else:
+            instance.products_set.update(is_active=False)
+
+        db_profile_by_type(sender, 'UPDATE', connection.queries)
 
 
 # @user_passes_test(lambda u: u.is_superuser)
