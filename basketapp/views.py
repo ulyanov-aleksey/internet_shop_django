@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db import connection
 from django.db.models import F
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
@@ -36,6 +37,9 @@ def add(request, pk):
     # basket_item.quantity += 1
     basket_item[0].quantity = F('quantity')+1
     basket_item[0].save()
+
+    update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
+    print(f'query basket_add:{update_queries}')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
