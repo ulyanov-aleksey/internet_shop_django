@@ -34,12 +34,12 @@ def add(request, pk):
     if not basket_item:
         basket_item = Basket(user=request.user, product=product)
 
-    # basket_item.quantity += 1
-    basket_item[0].quantity = F('quantity')+1
+    basket_item.quantity += 1
+    # basket_item[0].quantity = F('quantity')+1
     basket_item[0].save()
 
-    update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
-    print(f'query basket_add:{update_queries}')
+    # update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
+    # print(f'query basket_add:{update_queries}')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
