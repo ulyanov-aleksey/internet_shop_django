@@ -31,6 +31,7 @@ def add(request, pk):
 
     basket_item = Basket.objects.filter(user=request.user, product=product).first()
     # basket_item = Basket.get_product(user=request.user, product=product)
+    # нужно добавить метод get_product для модели Basket (закоментированный код - для F-обьекта)
 
     if not basket_item:
         basket_item = Basket(user=request.user, product=product)
