@@ -29,17 +29,25 @@ def add(request, pk):
         return HttpResponseRedirect(reverse('all_products:product', args=[pk]))
     product = get_object_or_404(Products, pk=pk)
 
-    basket_item = Basket.objects.filter(user=request.user, product=product).first()
+    # basket_item = Basket.objects.filter(user=request.user, product=product).first()
+    basket_item = Basket.get_product(user=request.user, product=product)
+    #
+    # if not basket_item:
+    #     basket_item = Basket(user=request.user, product=product)
+    #
+    # basket_item.quantity += 1
+    # basket_item.save()
 
-    if not basket_item:
+    if basket_item:
+        basket_item[0].quantity = F('quantity') + 1
+        basket_item[0].save()
+        update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
+        print(f'query basket_add:{update_queries}')
+
+    else:
         basket_item = Basket(user=request.user, product=product)
-
-    basket_item.quantity += 1
-    # basket_item[0].quantity = F('quantity')+1
-    basket_item.save()
-
-    # update_queries = list(filter(lambda x: 'UPDATE' in x['sql'], connection.queries))
-    # print(f'query basket_add:{update_queries}')
+        basket_item.quantity += 1
+        basket_item.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -54,7 +62,6 @@ def remove(request, pk):
 
 @login_required
 def basket_edit(request, pk, quantity):
-
     if request.is_ajax():
         quantity = int(quantity)
         new_basket_item = Basket.objects.get(pk=int(pk))
