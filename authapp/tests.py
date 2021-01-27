@@ -51,9 +51,6 @@ class TestAuthUserTestCase(TestCase):
         response = self.client.get('/auth/login/')
         self.assertEqual(response.status_code, 302)
 
-
-
-
     # функция для завершения теста(очистка временных данных)
     def tearDown(self):
         call_command('sqlsequencereset', 'mainapp', 'authapp', 'ordersapp', 'basketapp')
