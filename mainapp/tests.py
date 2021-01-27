@@ -28,6 +28,16 @@ class TestMainappSmoke(TestCase):
         response = self.client.get('/')  # какой url тестируем
         self.assertEqual(response.status_code, 200)  # проверка на код 200(ОК)
 
+        response = self.client.get('/contacts/')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/products/')
+        self.assertEqual(response.status_code, 200)
+
+
+
+
+
 # class TestMainappSmoke(TestCase):
 #     def setUp(self):                    # В этом методе указываем какими данными заполнить тестируемую бд
 #         call_command('flush', '--noinput')
