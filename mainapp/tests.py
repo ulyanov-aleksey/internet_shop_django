@@ -11,7 +11,7 @@ from django.core.management import call_command
 class TestMainappSmoke(TestCase):
 
     def setUp(self):
-
+        call_command('flush', '--noinput')
         test_category = ProductsCategores.objects.create(name='Тест')  # в пустой бд(для теста) создаем категорию
         Products.objects.create(                      # создаем продукт в этой категории
             category=test_category,
