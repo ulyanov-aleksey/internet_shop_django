@@ -64,6 +64,9 @@ MIDDLEWARE = [
     # 'django.middleware.cache.FetchFromCacheMiddleware', настройка для кэширования всего сайта, DEBUG = False сделать
 ]
 
+
+
+# коментировать при проведении тестирования приложений из test.py
 # if DEBUG:
 #     def show_toolbar(request):
 #         return True
