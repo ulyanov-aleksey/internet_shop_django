@@ -49,7 +49,7 @@ class TestAuthUserTestCase(TestCase):
         self.assertFalse(response.context['user'].is_anonymous)
 
         response = self.client.get('/auth/login/')
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     # функция для завершения теста(очистка временных данных)
     def tearDown(self):
