@@ -15,7 +15,7 @@ class TestMainappSmoke(TestCase):
         self.client = Client()
 
     def test_mainapp_urls(self):
-        response = self.client.get('/')   # какой url тестируем
+        response = self.client.get('')   # какой url тестируем
         self.assertEqual(response.status_code, 200)
 
         # response = self.client.get('/contacts/')
