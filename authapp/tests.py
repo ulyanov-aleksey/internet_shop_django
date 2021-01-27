@@ -42,14 +42,32 @@ class TestAuthUserTestCase(TestCase):
         # self.assertIn('Пользователь', response.content.decode())
 
     def test_user_logout(self):
+        # данные пользователя
         self.client.login(username='django', password='geekbrains')
 
+        # логинимся
         response = self.client.get('/auth/login/')
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context['user'].is_anonymous)
 
-        response = self.client.get('/auth/login/')
+        # выходим из системы
+        response = self.client.get('/auth/logout/')
+        self.assertEqual(response.status_code, 302)
+
+        # главная после выхода
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['user'].is_anonymous)
+
+    # def test_user_logout(self):
+    #     self.client.login(username='django', password='geekbrains')
+    #
+    #     response = self.client.get('/auth/login/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertFalse(response.context['user'].is_anonymous)
+    #
+    #     response = self.client.get('/auth/login/')
+    #     self.assertEqual(response.status_code, 200)
 
     # функция для завершения теста(очистка временных данных)
     def tearDown(self):
