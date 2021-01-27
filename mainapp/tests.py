@@ -36,7 +36,7 @@ class TestMainappSmoke(TestCase):
 
     def test_products_pages(self):
         for category in ProductsCategores.objects.all():
-            response = self.client.get(f'/products/category/{category.pk}/')
+            response = self.client.get(f'/products/{category.pk}/')
             self.assertEqual(response.status_code, 200)
 
         for product in Products.objects.all():
